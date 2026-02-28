@@ -8,6 +8,7 @@ import com.sebastiancorradi.myapplication.domain.usecase.GetArticlesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,12 +25,24 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val articles = getArticlesUseCase()
-                _articlesState.value = articles
                 Log.e(TAG, "articles loaded: ${articles.size}")
+                for(article in articles){
+                    Log.e(TAG, "articleId: ${article.id}")
+                }
+                _articlesState.value = articles
             } catch (e: Exception) {
                 Log.e(TAG, e.toString())
                 // TODO Manejar error
             }
         }
     }
+
+    fun deleteArticle(article: Article?) {
+        Log.e(TAG, "deleteArticle: $article")
+        val newITems = _articlesState.value?.filter { it != article }
+        _articlesState.value = newITems
+    }
+        /*viewModelScope.launch {
+
+        }*/
 }
