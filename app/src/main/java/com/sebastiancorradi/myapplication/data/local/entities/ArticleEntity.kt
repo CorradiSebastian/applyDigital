@@ -21,6 +21,7 @@ fun ArticleEntity.toDomain(): Article {
         id = id,
         title = title,
         suportingContent = getSupporttingContent(author?:"", createdAtI),
+        createdTS = createdAtI,
         url = url
     )
 }

@@ -1,6 +1,7 @@
 package com.sebastiancorradi.myapplication.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,7 +29,8 @@ import com.sebastiancorradi.myapplication.domain.model.Article
 fun ArticleItem(
     modifier: Modifier = Modifier,
     article: Article,
-    onRemove: (String) -> Unit
+    onRemove: (String) -> Unit,
+    onClick: (String) -> Unit
 ) {
     val state = rememberSwipeToDismissBoxState()
     LaunchedEffect(state.currentValue) {
@@ -68,7 +70,8 @@ fun ArticleItem(
             ) {
             Card(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .clickable(true, onClick = { onClick(article.url ?: "") }),
                 shape = RectangleShape,
                 colors = androidx.compose.material3.CardDefaults.cardColors(
                     containerColor = Color.White

@@ -37,3 +37,13 @@ fun getAgeByTimeStamp(timestamp: Long): String {
 fun getSupporttingContent(author: String, cratedTS: Long): String{
     return author + " - " + getAgeByTimeStamp(cratedTS)
 }
+
+fun isValidUrl(url: String): Boolean {
+    return try {
+        val uri = java.net.URI(url)
+        uri.scheme != null && (uri.scheme == "http" || uri.scheme == "https")
+    } catch (e: Exception) {
+        false
+    }
+}
+

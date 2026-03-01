@@ -12,17 +12,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sebastiancorradi.myapplication.MainViewModel
 import com.sebastiancorradi.myapplication.presentation.components.ArticleItem
+import com.sebastiancorradi.myapplication.utils.WarningDialog
+import com.sebastiancorradi.myapplication.utils.isValidUrl
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(modifier: Modifier = Modifier){
+fun MainScreen(modifier: Modifier = Modifier,
+               onArticleClick: (url:String) -> Unit){
     val viewModel: MainViewModel = hiltViewModel()
     val articles by viewModel.articlesState.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
+    var showWarning by remember { mutableStateOf(false) }
     
     LaunchedEffect(Unit) {
         viewModel.loadArticles()
@@ -48,8 +55,22 @@ fun MainScreen(modifier: Modifier = Modifier){
                         onRemove = {
                             Log.e("ArticleScreen", "Borrando: ${article.title}")
                             viewModel.deleteArticle(article)
+                        },
+                        onClick = {url ->
+                            if (isValidUrl(url)){
+                                Log.e("ArticleScreen", "Clicked: ${url}")
+                                // Navega a la pantalla de WebView pasando la URL
+                                onArticleClick(url)
+                            } else {
+                               showWarning = true
+                            }
                         }
                     )
+                }
+            }
+            if (showWarning) {
+                WarningDialog("Error", "Problemas en la URL") {
+                    showWarning = false
                 }
             }
         }

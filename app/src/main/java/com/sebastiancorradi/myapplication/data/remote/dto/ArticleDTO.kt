@@ -17,6 +17,7 @@ data class ArticleDTO(
             id =objectId,
             title = storyTitle?: title?:"",
             suportingContent = getSupporttingContent(author?:"", createdAtI),
+            createdTS = createdAtI,
             url = storyUrl
         )
 }
