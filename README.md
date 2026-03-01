@@ -17,7 +17,7 @@ This is an Android application developed with a focus on modern development prac
 #### Steps to Run
 1.  **Clone the repository**:
     ```bash
-    git clone [repository-url]
+    git clone https://github.com/CorradiSebastian/applyDigital.git
     ```
 2.  **Open the project**:
     Launch Android Studio and select "Open" to navigate to the project's root folder.
@@ -55,6 +55,8 @@ The project follows **Clean Architecture** principles combined with the **MVVM (
 *   Articles in the UI might be slightly different too, because the lack of a figma or more specific details 
 *   No tests were requested, so no tests were added.
 
-![splash screen](splash1.png)
-![main screen](main.png)
-![Borrado](delete.png)
+<div style="display: flex; justify-content: space-around; align-items: center;">
+  <img src="images/splash1.png" alt="Imagen 1" style="width: 30%; height: auto;"/>
+  <img src="images/main.png" alt="Imagen 2" style="width: 30%; height: auto;"/>
+  <img src="images/delete.png" alt="Imagen 3" style="width: 30%; height: auto;"/>
+</div>
