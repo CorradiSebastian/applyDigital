@@ -18,8 +18,9 @@ class ArticlesRepositoryImpl @Inject constructor(
             val entities = response.articles.map { it.toEntity() }
             dao.clearAll()
             dao.insertArticles(entities)
-            entities.map { it.toDomain() }
+            dao.getUnDeletedArtilesArticles().map { it.toDomain() }
         } catch (e: Exception) {
+            //TODO.. handle it better
             dao.getUnDeletedArtilesArticles().map { it.toDomain() }
         }
     }

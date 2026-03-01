@@ -15,10 +15,10 @@ interface ArticleDao {
     @Query("SELECT * FROM articles WHERE deleted = 0")
     suspend fun getUnDeletedArtilesArticles(): List<ArticleEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertArticles(articles: List<ArticleEntity>)
 
-    @Query("DELETE FROM articles")
+    @Query("DELETE FROM articles where deleted = 0")
     suspend fun clearAll()
 
     @Query("UPDATE articles SET deleted = 1 where id = :articleId")

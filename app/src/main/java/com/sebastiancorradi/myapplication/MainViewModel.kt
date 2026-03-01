@@ -19,13 +19,16 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     private final val TAG = "MainViewModel"
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
     private val _articlesState = MutableStateFlow<List<Article>?>(null)
     val articlesState: StateFlow<List<Article>?> = _articlesState
 
     fun loadArticles() {
         viewModelScope.launch {
             try {
-                val articles = getArticlesUseCase()
+                val articles = getArticlesUseCase().sortedByDescending { it.createdTS }
                 _articlesState.value = articles
             } catch (e: Exception) {
                 Log.e(TAG, e.toString())
@@ -35,11 +38,22 @@ class MainViewModel @Inject constructor(
     }
 
     fun deleteArticle(article: Article?) {
-        article?.let {
+        article?.let { articleToDelete ->
             viewModelScope.launch {
-                deleteArticleUseCase(it)
-                _articlesState.value = _articlesState.value?.filter { item -> item.id != it.id }
+                deleteArticleUseCase(articleToDelete)
+                val articles = getArticlesUseCase().sortedByDescending { it.createdTS }
+                _articlesState.value = articles
             }
+        }
+
+    }
+
+    fun refreshArticles() {
+        viewModelScope.launch {
+            _isRefreshing.value = true
+            val articles = getArticlesUseCase()
+            _articlesState.value = articles.sortedByDescending { it.createdTS }
+            _isRefreshing.value = false
         }
     }
 }
