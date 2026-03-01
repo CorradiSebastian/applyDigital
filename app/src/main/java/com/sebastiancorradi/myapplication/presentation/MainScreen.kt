@@ -42,7 +42,7 @@ fun MainScreen(modifier: Modifier = Modifier){
                         Log.e("ArticleScreen", "Borrando: $it")
                         viewModel.deleteArticle(article)
                     }
-                                   }
+                }
             }
         }
     }

@@ -4,17 +4,18 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sebastiancorradi.myapplication.domain.model.Article
+import com.sebastiancorradi.myapplication.domain.usecase.DeleteArticleUseCase
 import com.sebastiancorradi.myapplication.domain.usecase.GetArticlesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getArticlesUseCase: GetArticlesUseCase
+    private val getArticlesUseCase: GetArticlesUseCase,
+    private val deleteArticleUseCase: DeleteArticleUseCase
 ) : ViewModel() {
     private final val TAG = "MainViewModel"
 
@@ -25,10 +26,6 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val articles = getArticlesUseCase()
-                Log.e(TAG, "articles loaded: ${articles.size}")
-                for(article in articles){
-                    Log.e(TAG, "articleId: ${article.id}")
-                }
                 _articlesState.value = articles
             } catch (e: Exception) {
                 Log.e(TAG, e.toString())
@@ -38,11 +35,11 @@ class MainViewModel @Inject constructor(
     }
 
     fun deleteArticle(article: Article?) {
-        Log.e(TAG, "deleteArticle: $article")
-        val newITems = _articlesState.value?.filter { it != article }
-        _articlesState.value = newITems
+        article?.let {
+            viewModelScope.launch {
+                deleteArticleUseCase(it)
+                _articlesState.value = _articlesState.value?.filter { item -> item.id != it.id }
+            }
+        }
     }
-        /*viewModelScope.launch {
-
-        }*/
 }

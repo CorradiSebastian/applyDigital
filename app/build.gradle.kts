@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("kapt")                 // Necesario para procesamiento de anotaciones
-    alias(libs.plugins.hilt.android)   // Plugin de Hilt desde catálogo
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -60,8 +60,13 @@ dependencies {
 
     // Hilt principal
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)       // Procesador de anotaciones
+    ksp(libs.hilt.compiler)
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -71,7 +76,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
-// Para permitir referencias a R class con Hilt en el caso de usar ViewModel
+
+/*
 kapt {
     correctErrorTypes = true
-}
+}*/
