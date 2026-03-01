@@ -19,6 +19,9 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     private final val TAG = "MainViewModel"
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
     private val _articlesState = MutableStateFlow<List<Article>?>(null)
     val articlesState: StateFlow<List<Article>?> = _articlesState
 
@@ -40,6 +43,15 @@ class MainViewModel @Inject constructor(
                 deleteArticleUseCase(it)
                 _articlesState.value = _articlesState.value?.filter { item -> item.id != it.id }
             }
+        }
+    }
+
+    fun refreshArticles() {
+        viewModelScope.launch {
+            _isRefreshing.value = true
+            val articles = getArticlesUseCase()
+            _articlesState.value = articles
+            _isRefreshing.value = false
         }
     }
 }

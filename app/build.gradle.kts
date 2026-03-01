@@ -52,6 +52,8 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.core.splashscreen)
 
+    //Material 3
+    implementation(libs.androidx.material3)
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
@@ -76,8 +78,3 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
-
-/*
-kapt {
-    correctErrorTypes = true
-}*/

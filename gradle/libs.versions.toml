@@ -9,6 +9,7 @@ lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.4"
 composeBom = "2024.09.00"
 coreSplashscreen = "1.2.0"
+material3 = "1.4.0"
 retrofit = "2.9.0"
 okhttp = "4.12.0"
 converter-gson = "2.9.0"
@@ -19,6 +20,7 @@ ksp = "2.0.21-1.0.25" # Ensure this matches your Kotlin version
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
