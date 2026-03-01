@@ -56,7 +56,7 @@ The project follows **Clean Architecture** principles combined with the **MVVM (
 *   No tests were requested, so no tests were added.
 
 <div style="display: flex; justify-content: space-around; align-items: center;">
-  <img src="images/splash1.png" alt="Imagen 1" style="width: 30%; height: auto;"/>
-  <img src="images/main.png" alt="Imagen 2" style="width: 30%; height: auto;"/>
-  <img src="images/delete.png" alt="Imagen 3" style="width: 30%; height: auto;"/>
+  <img src="splash1.png" alt="Imagen 1" style="width: 30%; height: auto;"/>
+  <img src="main.png" alt="Imagen 2" style="width: 30%; height: auto;"/>
+  <img src="delete.png" alt="Imagen 3" style="width: 30%; height: auto;"/>
 </div>
